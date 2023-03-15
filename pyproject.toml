@@ -4,6 +4,13 @@ version = "0.0.1"
 description = "Generate LangChain config quickly"
 authors = ["Hironsan <hiroki.nakayama.py@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/doccano/doccano-mini"
+repository = "https://github.com/doccano/doccano-mini"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+]
 
 [tool.poetry.scripts]
 doccano-mini = 'doccano_mini.cli:main'
