@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "doccano-mini"
+version = "0.1.0"
+description = "Generate LangChain config quickly"
+authors = ["Hironsan <hiroki.nakayama.py@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.scripts]
+doccano-mini = 'doccano_mini.cli:main'
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.20.0"
+langchain = "^0.0.112"
+openai = "^0.27.2"
+
+[tool.poetry.dev-dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+mypy = "^1.1.1"
+pyproject-flake8 = "^6.0.0"
+taskipy = "^1.10.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+target-version = ['py38', 'py39']
+include = '\.pyi?$'
+
+[tool.flake8]
+max-line-length = 120
+max-complexity = 18
+ignore = "E203,E266,W503,"
+filename = "*.py"
+
+[tool.mypy]
+python_version = "3.8"
+ignore_missing_imports = true
+show_error_codes = true
+
+[tool.isort]
+profile = "black"
+include_trailing_comma = true
+multi_line_output = 3
+
+
+[tool.taskipy.tasks]
+isort = "isort . -c --skip migrations"
+flake8 = "pflake8 --filename \"*.py\""
+black = "black --check ."
+mypy = "mypy ."
