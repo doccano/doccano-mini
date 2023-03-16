@@ -1,5 +1,3 @@
-import os
-
 import streamlit as st
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
@@ -45,8 +43,20 @@ def main():
 
     st.header("Test")
     text = st.text_area(label="Please enter your text.", value="")
+
+    # https://platform.openai.com/docs/models/gpt-3-5
+    available_models = (
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-0301",
+        "text-davinci-003",
+        "text-davinci-002",
+        "code-davinci-002",
+    )
+
+    # Use text-davinci-003 by default.
+    model_name = st.selectbox("Select an OpenAI model to use.", available_models, index=2)
+
     if st.button("Predict"):
-        model_name = os.getenv("OPENAI_MODEL_NAME", "text-davinci-003")
         llm = OpenAI(model_name=model_name)
         chain = LLMChain(llm=llm, prompt=prompt)
         response = chain.run(text)
