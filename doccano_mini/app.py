@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
@@ -37,7 +39,8 @@ def main():
     text = st.text_area(label="Please enter your text.", value="")
     if st.button("Predict"):
         prompt = select_prompt_maker(task)(examples)
-        llm = OpenAI()
+        model_name = os.getenv("OPENAI_MODEL_NAME", "text-davinci-003")
+        llm = OpenAI(model_name=model_name)
         chain = LLMChain(llm=llm, prompt=prompt)
         response = chain.run(text)
         label = response.split(":")[1]
