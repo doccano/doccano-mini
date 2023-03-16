@@ -23,6 +23,8 @@ def display_download_button():
 
 
 def main():
+    st.set_page_config(page_title="doccano-mini", page_icon=":memo:")
+
     st.title("doccano-mini")
 
     st.header("Select your task")
