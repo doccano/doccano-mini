@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doccano-mini"
-version = "0.0.2"
+version = "0.0.3"
 description = "Generate LangChain config quickly"
 authors = ["Hironsan <hiroki.nakayama.py@gmail.com>"]
 license = "MIT"
