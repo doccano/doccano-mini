@@ -44,6 +44,8 @@ def main():
     st.header("Test")
     text = st.text_area(label="Please enter your text.", value="")
 
+    st.header("Model Options")
+
     # https://platform.openai.com/docs/models/gpt-3-5
     available_models = (
         "gpt-3.5-turbo",
@@ -56,8 +58,12 @@ def main():
     # Use text-davinci-003 by default.
     model_name = st.selectbox("Select an OpenAI model to use.", available_models, index=2)
 
+    temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
+
+    top_p = st.slider("Top-p", min_value=0.0, max_value=1.0, value=1.0, step=0.01)
+
     if st.button("Predict"):
-        llm = OpenAI(model_name=model_name)
+        llm = OpenAI(model_name=model_name, temperature=temperature, top_p=top_p)
         chain = LLMChain(llm=llm, prompt=prompt)
         response = chain.run(text)
         label = response.split(":")[1]
