@@ -32,6 +32,10 @@ In this step, we will annotate a few text. We can add a new text by clicking the
 
 ![Step1](https://raw.githubusercontent.com/doccano/doccano-mini/master/docs/images/annotation.gif)
 
+The editor also supports pasting in tabular data from Google Sheets, Excel, and many other similar tools.
+
+![Copy and Paste](https://raw.githubusercontent.com/doccano/doccano-mini/master/docs/images/copy_and_paste.gif)
+
 ### Step2: Test your task
 
 In this step, we will test your task. We can enter a new test to the text box and click the `Predict` button. Then, we can see the result of the test.
