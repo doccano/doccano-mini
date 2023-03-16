@@ -20,6 +20,13 @@ For this example, we will be using OpenAI’s APIs, so we need to set the enviro
 export OPENAI_API_KEY="..."
 ```
 
+If you want to change the model, set the environment variable in the terminal.  
+We use `text-davinci-003` by default.
+
+```bash
+export OPENAI_MODEL_NAME="gpt-3.5-turbo"
+```
+
 Then, we can run the server.
 
 ```bash
