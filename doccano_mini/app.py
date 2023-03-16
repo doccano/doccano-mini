@@ -35,10 +35,17 @@ def main():
     edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
     examples = edited_df.to_dict(orient="records")
 
+    # Create prompt
+    prompt = select_prompt_maker(task)(examples)
+
+    st.header("Optional: Edit instruction")
+    with st.expander("See instruction"):
+        instruction = st.text_area(label="Instruction", value=prompt.prefix, height=200)
+        prompt.prefix = instruction
+
     st.header("Test")
     text = st.text_area(label="Please enter your text.", value="")
     if st.button("Predict"):
-        prompt = select_prompt_maker(task)(examples)
         model_name = os.getenv("OPENAI_MODEL_NAME", "text-davinci-003")
         llm = OpenAI(model_name=model_name)
         chain = LLMChain(llm=llm, prompt=prompt)

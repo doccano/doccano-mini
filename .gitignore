@@ -201,3 +201,4 @@ bundle/
 webpack-stats.json
 
 .vscode
+config.yaml
