@@ -60,6 +60,9 @@ def main():
     temperature = col2.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
     top_p = col2.slider("Top-p", min_value=0.0, max_value=1.0, value=1.0, step=0.01)
 
+    with st.expander("See your prompt"):
+        st.markdown(f"```\n{prompt.format(input=text)}\n```")
+
     if st.button("Predict"):
         llm = OpenAI(model_name=model_name, temperature=temperature, top_p=top_p)
         chain = LLMChain(llm=llm, prompt=prompt)
