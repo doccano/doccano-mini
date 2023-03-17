@@ -14,4 +14,7 @@ def select_example_df(task: TaskType) -> pd.DataFrame:
             columns=["text", "label"],
         )
         return df
+    elif task == TaskType.TASK_FREE.value:
+        df = pd.DataFrame([{"Column 1": "", "Column 2": ""}], columns=["Column 1", "Column 2"])
+        return df
     raise ValueError(f"Task {task} is not supported.")
