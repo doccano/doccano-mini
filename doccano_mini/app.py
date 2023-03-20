@@ -49,7 +49,7 @@ def task_classification(task: TaskType):
         prompt.prefix = instruction
 
     st.header("Test")
-    api_key = st.text_input("Enter API key", value=os.environ.get("OPENAI_API_KEY", ""))
+    api_key = st.text_input("Enter API key", value=os.environ.get("OPENAI_API_KEY", ""), type="password")
     col1, col2 = st.columns([3, 1])
     text = col1.text_area(label="Please enter your text.", value="", height=300)
 
