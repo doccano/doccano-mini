@@ -57,9 +57,14 @@ profile = "black"
 include_trailing_comma = true
 multi_line_output = 3
 
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
 
 [tool.taskipy.tasks]
 isort = "isort . -c --skip migrations"
 flake8 = "pflake8 --filename \"*.py\""
 black = "black --check ."
 mypy = "mypy ."
+test = "pytest --cov=doccano_mini --cov-report=term-missing -vv"
