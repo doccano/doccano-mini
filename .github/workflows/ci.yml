@@ -30,4 +30,4 @@ jobs:
           poetry run task mypy
       - name: pytest
         run: |
-          poetry run task pytest
+          poetry run task test
