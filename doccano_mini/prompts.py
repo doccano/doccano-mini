@@ -10,7 +10,8 @@ def make_classification_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     unique_labels = set([example["label"] for example in examples])
 
     task_instruction = "Classify the text into one of the following labels:\n"
-    for label in unique_labels:
+    # Sorting to make label order deterministic
+    for label in sorted(unique_labels):
         task_instruction += f"- {label}\n"
 
     example_prompt = PromptTemplate(input_variables=["text", "label"], template="text: {text}\nlabel: {label}")

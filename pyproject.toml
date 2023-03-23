@@ -29,6 +29,8 @@ black = "^23.1.0"
 isort = "^5.12.0"
 mypy = "^1.1.1"
 pyproject-flake8 = "^6.0.0"
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -55,9 +57,14 @@ profile = "black"
 include_trailing_comma = true
 multi_line_output = 3
 
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
 
 [tool.taskipy.tasks]
 isort = "isort . -c --skip migrations"
 flake8 = "pflake8 --filename \"*.py\""
 black = "black --check ."
 mypy = "mypy ."
+test = "pytest --cov=doccano_mini --cov-report=term-missing -vv"
