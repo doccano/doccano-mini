@@ -28,3 +28,6 @@ jobs:
       - name: mypy
         run: |
           poetry run task mypy
+      - name: pytest
+        run: |
+          poetry run task pytest
