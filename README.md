@@ -40,7 +40,7 @@ The editor also supports pasting in tabular data from Google Sheets, Excel, and 
 
 In this step, we will test your task. We can enter a new test to the text box and click the `Predict` button. Then, we can see the result of the test.
 
-![Step2](https://raw.githubusercontent.com/doccano/doccano-mini/master/docs/images/test_new_example.jpg)
+<img src="https://raw.githubusercontent.com/doccano/doccano-mini/master/docs/images/test_new_example.jpg" alt= “Step2” width="700">
 
 ### Step3: Download the config
 
@@ -57,5 +57,5 @@ chain.run("YOUR TEXT")
 
 ```bash
 poetry install
-streamlit run doccano_mini/app.py
+streamlit run doccano_mini/home.py
 ```
