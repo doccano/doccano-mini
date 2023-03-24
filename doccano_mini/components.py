@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 import streamlit as st
 from langchain.llms import OpenAI
@@ -33,7 +34,7 @@ def task_instruction_editor(prompt: FewShotPromptTemplate) -> FewShotPromptTempl
     return prompt
 
 
-def openai_model_form() -> BaseLanguageModel:
+def openai_model_form() -> Optional[BaseLanguageModel]:
     # https://platform.openai.com/docs/models/gpt-3-5
     AVAILABLE_MODELS = (
         "gpt-3.5-turbo",
@@ -43,6 +44,8 @@ def openai_model_form() -> BaseLanguageModel:
         "code-davinci-002",
     )
     api_key = st.text_input("API key", value=os.environ.get("OPENAI_API_KEY", ""), type="password")
+    if not api_key:
+        return None
     model_name = st.selectbox("Model", AVAILABLE_MODELS, index=2)
     temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
     top_p = st.slider("Top-p", min_value=0.0, max_value=1.0, value=1.0, step=0.01)
