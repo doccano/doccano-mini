@@ -1,12 +1,12 @@
-import os
-
 import streamlit as st
 from langchain.chains import LLMChain
-from langchain.llms import OpenAI
 
-from doccano_mini.components import display_download_button, display_usage
+from doccano_mini.components import (
+    display_download_button,
+    display_usage,
+    openai_model_form,
+)
 from doccano_mini.examples import make_task_free_example
-from doccano_mini.models import AVAILABLE_MODELS
 from doccano_mini.prompts import make_task_free_prompt
 
 st.title("Task Free")
@@ -31,13 +31,8 @@ inputs = {column: st.text_input(f"Input for {column}:") for column in columns[:-
 
 st.markdown(f"Your prompt\n```\n{prompt.format(**inputs)}\n```")
 
-# Use text-davinci-003 by default.
-api_key = st.text_input("Enter API key", value=os.environ.get("OPENAI_API_KEY", ""), type="password")
-model_name = st.selectbox("Model", AVAILABLE_MODELS, index=2)
-temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7, step=0.01)
-top_p = st.slider("Top-p", min_value=0.0, max_value=1.0, value=1.0, step=0.01)
+llm = openai_model_form()
 if st.button("Predict"):
-    llm = OpenAI(model_name=model_name, temperature=temperature, top_p=top_p, openai_api_key=api_key)  # type:ignore
     chain = LLMChain(llm=llm, prompt=prompt)
     response = chain.run(**inputs)
     st.text(response)
