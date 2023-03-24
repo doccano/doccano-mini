@@ -23,11 +23,16 @@ examples = edited_df.to_dict(orient="records")
 prompt = make_task_free_prompt(examples)
 prompt = task_instruction_editor(prompt)
 
-inputs = {column: st.text_input(f"Input for {column}:") for column in columns[:-1]}
+st.header("Test")
+col1, col2 = st.columns([3, 1])
+inputs = {column: col1.text_area(label=f"Input for {column}:", value="", height=300) for column in columns[:-1]}
 
-st.markdown(f"Your prompt\n```\n{prompt.format(**inputs)}\n```")
+with col2:
+    llm = openai_model_form()
 
-llm = openai_model_form()
+with st.expander("See your prompt"):
+    st.markdown(f"```\n{prompt.format(**inputs)}\n```")
+
 if st.button("Predict"):
     chain = LLMChain(llm=llm, prompt=prompt)
     response = chain.run(**inputs)

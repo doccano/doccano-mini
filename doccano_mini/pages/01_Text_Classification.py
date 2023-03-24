@@ -21,19 +21,18 @@ prompt = task_instruction_editor(prompt)
 
 st.header("Test")
 col1, col2 = st.columns([3, 1])
-text = col1.text_area(label="Please enter your text.", value="", height=300)
+inputs = {"input": col1.text_area(label="Please enter your text.", value="", height=300)}
 
 with col2:
     llm = openai_model_form()
 
 with st.expander("See your prompt"):
-    st.markdown(f"```\n{prompt.format(input=text)}\n```")
+    st.markdown(f"```\n{prompt.format(**inputs)}\n```")
 
 if st.button("Predict"):
     chain = LLMChain(llm=llm, prompt=prompt)
-    response = chain.run(text)
-    label = response.split(":")[1]
-    st.text(label)
+    response = chain.run(**inputs)
+    st.text(response)
 
     chain.save("config.yaml")
     display_download_button()
