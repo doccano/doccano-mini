@@ -5,7 +5,7 @@ import streamlit.web.cli as stcli
 
 
 def main():
-    filepath = str(Path(__file__).parent.resolve() / "app.py")
+    filepath = str(Path(__file__).parent.resolve() / "home.py")
     sys.argv = ["streamlit", "run", filepath, "--global.developmentMode=false"]
     sys.exit(stcli.main())
 
