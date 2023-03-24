@@ -5,6 +5,7 @@ from doccano_mini.components import (
     display_download_button,
     display_usage,
     openai_model_form,
+    task_instruction_editor,
 )
 from doccano_mini.examples import make_classification_example
 from doccano_mini.prompts import make_classification_prompt
@@ -15,13 +16,8 @@ df = make_classification_example()
 edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
 examples = edited_df.to_dict(orient="records")
 
-# Create prompt
 prompt = make_classification_prompt(examples)
-
-st.header("Optional: Edit instruction")
-with st.expander("See instruction"):
-    instruction = st.text_area(label="Instruction", value=prompt.prefix, height=200)
-    prompt.prefix = instruction
+prompt = task_instruction_editor(prompt)
 
 st.header("Test")
 col1, col2 = st.columns([3, 1])

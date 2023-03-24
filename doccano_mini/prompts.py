@@ -26,6 +26,7 @@ def make_classification_prompt(examples: List[dict]) -> FewShotPromptTemplate:
 def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     columns = list(examples[0])
 
+    task_instruction = f"Predict {columns[-1]} based on {', '.join(columns[:-1])}."
     example_prompt = PromptTemplate(
         input_variables=columns, template="\n".join([f"{column}: {{{column}}}" for column in columns])
     )
@@ -33,6 +34,7 @@ def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     prompt = FewShotPromptTemplate(
         examples=examples,
         example_prompt=example_prompt,
+        prefix=task_instruction,
         suffix="\n".join([f"{column}: {{{column}}}" for column in columns[:-1]]),
         input_variables=columns[:-1],
     )

@@ -2,6 +2,7 @@ import os
 
 import streamlit as st
 from langchain.llms import OpenAI
+from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.schema import BaseLanguageModel
 
 CODE = """from langchain.chains import load_chain
@@ -23,6 +24,13 @@ def display_download_button():
 def display_usage():
     st.header("Usage")
     st.code(CODE)
+
+
+def task_instruction_editor(prompt: FewShotPromptTemplate) -> FewShotPromptTemplate:
+    st.header("Edit instruction")
+    with st.expander("See instruction"):
+        prompt.prefix = st.text_area(label="Enter task instruction", value=prompt.prefix, height=200)
+    return prompt
 
 
 def openai_model_form() -> BaseLanguageModel:

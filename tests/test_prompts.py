@@ -35,6 +35,8 @@ def test_make_task_free_prompt():
     ]
 
     expected = """\
+Predict Japanese based on English.
+
 English: I like sushi.
 Japanese: 寿司が好きです。
 

@@ -5,6 +5,7 @@ from doccano_mini.components import (
     display_download_button,
     display_usage,
     openai_model_form,
+    task_instruction_editor,
 )
 from doccano_mini.examples import make_task_free_example
 from doccano_mini.prompts import make_task_free_prompt
@@ -20,12 +21,7 @@ edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
 examples = edited_df.to_dict(orient="records")
 
 prompt = make_task_free_prompt(examples)
-
-prompt.prefix = st.text_area(
-    label="Enter task instruction",
-    placeholder=f"Predict {columns[-1]} based on {', '.join(columns[:-1])}.",
-    height=200,
-)
+prompt = task_instruction_editor(prompt)
 
 inputs = {column: st.text_input(f"Input for {column}:") for column in columns[:-1]}
 
