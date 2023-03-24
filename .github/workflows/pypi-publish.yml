@@ -19,6 +19,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry poetry-dynamic-versioning
         poetry install
+    - name: Copy README
+      run: |
+        cp README.md doccano_mini/docs/
     - name: Build a binary wheel and a source tarball
       run: |
         poetry build
