@@ -29,8 +29,11 @@ with col2:
 with st.expander("See your prompt"):
     st.markdown(f"```\n{prompt.format(**inputs)}\n```")
 
-if st.button("Predict"):
-    chain = LLMChain(llm=llm, prompt=prompt)
+if llm is None:
+    st.error("Enter your API key.")
+
+if st.button("Predict", disabled=llm is None):
+    chain = LLMChain(llm=llm, prompt=prompt)  # type:ignore
     response = chain.run(**inputs)
     st.text(response)
 
