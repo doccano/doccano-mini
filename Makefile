@@ -3,3 +3,6 @@ lint:
 	poetry run task black
 	poetry run task isort
 	poetry run task mypy
+
+test:
+	poetry run task test
