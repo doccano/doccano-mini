@@ -7,9 +7,9 @@ from langchain.prompts.few_shot import FewShotPromptTemplate
 
 from doccano_mini.components import (
     display_download_button,
-    display_usage,
     openai_model_form,
     task_instruction_editor,
+    usage,
 )
 
 
@@ -64,4 +64,4 @@ class BasePage(ABC):
 
             chain.save("config.yaml")
             display_download_button()
-        display_usage()
+        usage()

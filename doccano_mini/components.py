@@ -18,7 +18,7 @@ def display_download_button():
         )
 
 
-def display_usage():
+def usage():
     st.header("Usage")
     filepath = Path(__file__).parent.resolve() / "docs" / "usage.md"
     with filepath.open("r", encoding="utf-8") as f:
