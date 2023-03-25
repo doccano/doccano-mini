@@ -1,15 +1,11 @@
 import os
+from pathlib import Path
 from typing import Optional
 
 import streamlit as st
 from langchain.llms import OpenAI
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.schema import BaseLanguageModel
-
-CODE = """from langchain.chains import load_chain
-
-chain = load_chain("chain.yaml")
-chain.run("YOUR TEXT")"""
 
 
 def display_download_button():
@@ -22,9 +18,11 @@ def display_download_button():
         )
 
 
-def display_usage():
+def usage():
     st.header("Usage")
-    st.code(CODE)
+    filepath = Path(__file__).parent.resolve() / "docs" / "usage.md"
+    with filepath.open("r", encoding="utf-8") as f:
+        st.markdown(f.read())
 
 
 def task_instruction_editor(prompt: FewShotPromptTemplate) -> FewShotPromptTemplate:
