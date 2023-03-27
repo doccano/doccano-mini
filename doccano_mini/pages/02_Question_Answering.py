@@ -19,7 +19,7 @@ class QuestionAnsweringPage(BasePage):
     def prepare_inputs(self, columns: List[str]):
         return {
             "context": st.text_area(label="Context.", value="", height=300),
-            "question": st.text_area(label="Question.", value="", height=100),
+            "question": st.text_input(label="Question.", value=""),
         }
 
 
