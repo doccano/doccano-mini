@@ -7,11 +7,7 @@ from doccano_mini.prompts import make_classification_prompt
 
 
 class TextClassificationPage(BasePage):
-    def make_examples(self, columns: List[str]):
-        df = self.load_examples("text_classification.json")
-        edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
-        examples = edited_df.to_dict(orient="records")
-        return examples
+    example_path = "text_classification.json"
 
     def make_prompt(self, examples: List[Dict]):
         return make_classification_prompt(examples)
