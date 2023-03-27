@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import Dict, List
 
+import pandas as pd
 import streamlit as st
 from langchain.chains import LLMChain
 from langchain.prompts.few_shot import FewShotPromptTemplate
@@ -20,6 +22,10 @@ class BasePage(ABC):
     @property
     def columns(self) -> List[str]:
         return []
+
+    def load_examples(self, filename: str) -> pd.DataFrame:
+        filepath = Path(__file__).parent.resolve().joinpath("examples", filename)
+        return pd.read_json(filepath)
 
     @abstractmethod
     def make_examples(self, columns: List[str]) -> List[Dict]:
