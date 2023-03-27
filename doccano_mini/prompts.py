@@ -23,6 +23,28 @@ def make_classification_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     return prompt
 
 
+def make_question_answering_prompt(examples: List[dict]) -> FewShotPromptTemplate:
+    task_instruction = (
+        "You are a highly intelligent question answering bot. "
+        "You take context and question as input and return the answer from the context. "
+        "Retain as much information as needed to answer the question at a later time. "
+        "If you don't know the answer, you should return N/A."
+    )
+
+    example_prompt = PromptTemplate(
+        input_variables=["context", "question", "answer"],
+        template="context: {context}\nquestion: {question}\nanswer: {answer}",
+    )
+    prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        prefix=task_instruction,
+        suffix="context: {context}\nquestion: {question}",
+        input_variables=["context", "question"],
+    )
+    return prompt
+
+
 def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     columns = list(examples[0])
 
