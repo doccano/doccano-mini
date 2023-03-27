@@ -2,7 +2,6 @@ from typing import Dict, List
 
 import streamlit as st
 
-from doccano_mini.examples import make_task_free_example
 from doccano_mini.layout import BasePage
 from doccano_mini.prompts import make_task_free_prompt
 
@@ -15,7 +14,7 @@ class TaskFreePage(BasePage):
         return columns
 
     def make_examples(self, columns: List[str]):
-        df = make_task_free_example()
+        df = self.load_examples("task_free.json")
         df = df.reindex(columns, axis="columns", fill_value="")
         edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
         examples = edited_df.to_dict(orient="records")
