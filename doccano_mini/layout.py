@@ -16,6 +16,8 @@ from doccano_mini.components import (
 
 
 class BasePage(ABC):
+    example_path: str = ""
+
     def __init__(self, title: str) -> None:
         self.title = title
 
@@ -27,9 +29,11 @@ class BasePage(ABC):
         filepath = Path(__file__).parent.resolve().joinpath("examples", filename)
         return pd.read_json(filepath)
 
-    @abstractmethod
     def make_examples(self, columns: List[str]) -> List[Dict]:
-        raise NotImplementedError()
+        df = self.load_examples(self.example_path)
+        edited_df = st.experimental_data_editor(df, num_rows="dynamic", width=1000)
+        examples = edited_df.to_dict(orient="records")
+        return examples
 
     @abstractmethod
     def make_prompt(self, examples: List[Dict]) -> FewShotPromptTemplate:
