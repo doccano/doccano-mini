@@ -45,6 +45,24 @@ def make_question_answering_prompt(examples: List[dict]) -> FewShotPromptTemplat
     return prompt
 
 
+def make_summarization_prompt(examples: List[dict]) -> FewShotPromptTemplate:
+    task_instruction = (
+        "You are a highly intelligent Summarization system. "
+        "You take Passage as input and summarize the passage as an expert."
+    )
+    example_prompt = PromptTemplate(
+        input_variables=["passage", "summary"], template="passage: {passage}\nsummary: {summary}"
+    )
+    prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        prefix=task_instruction,
+        suffix="passage: {passage}",
+        input_variables=["passage"],
+    )
+    return prompt
+
+
 def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     columns = list(examples[0])
 
