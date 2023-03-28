@@ -1,6 +1,13 @@
 # doccano-mini
 
-doccano-mini is a few-shot annotation tool to assist the development of applications with Large language models (LLMs). Once you annotate a few text, you can test your task (e.g. text classification) with LLMs, then download the [LangChain](https://github.com/hwchase17/langchain)'s config.
+doccano-mini is a few-shot annotation tool to assist the development of applications with Large language models (LLMs). Once you annotate a few text, you can solve your task (e.g. text classification) with LLMs via [LangChain](https://github.com/hwchase17/langchain).
+
+At this time, the following tasks are supported:
+
+- Text classification
+- Question answering
+- Summarization
+- Task Free
 
 Note: This is an experimental project.
 
