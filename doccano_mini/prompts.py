@@ -63,6 +63,23 @@ def make_summarization_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     return prompt
 
 
+def make_paraphrase_prompt(examples: List[dict]) -> FewShotPromptTemplate:
+    task_instruction = (
+        "You are a highly intelligent paraphrasing system. You take text as input and paraphrase it as an expert."
+    )
+    example_prompt = PromptTemplate(
+        input_variables=["text", "paraphrase"], template="text: {text}\nparaphrase: {paraphrase}"
+    )
+    prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        prefix=task_instruction,
+        suffix="text: {text}",
+        input_variables=["text"],
+    )
+    return prompt
+
+
 def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
     columns = list(examples[0])
 
