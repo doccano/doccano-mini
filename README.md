@@ -7,6 +7,7 @@ At this time, the following tasks are supported:
 - Text classification
 - Question answering
 - Summarization
+- Paraphrasing
 - Task Free
 
 Note: This is an experimental project.
