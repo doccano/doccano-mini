@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doccano-mini"
-version = "0.0.7"
+version = "0.0.8"
 description = "Annotation meets Large Language Models."
 authors = ["Hironsan <hiroki.nakayama.py@gmail.com>"]
 license = "MIT"
