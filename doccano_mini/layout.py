@@ -13,6 +13,7 @@ from doccano_mini.components import (
     task_instruction_editor,
     usage,
 )
+from doccano_mini.utils import escape_markdown
 
 
 class BasePage(ABC):
@@ -70,7 +71,7 @@ class BasePage(ABC):
         if st.button("Predict", disabled=llm is None):
             chain = LLMChain(llm=llm, prompt=prompt)  # type:ignore
             response = chain.run(**inputs)
-            st.markdown(response.replace("\n", "  \n"))
+            st.markdown(escape_markdown(response).replace("\n", "  \n"))
 
             chain.save("config.yaml")
             display_download_button()
