@@ -43,11 +43,15 @@ class BasePage(ABC):
     def prepare_inputs(self, columns: List[str]) -> Dict:
         raise NotImplementedError()
 
+    def annotate(self, examples: List[Dict]) -> List[Dict]:
+        return examples
+
     def render(self) -> None:
         st.title(self.title)
         st.header("Annotate your data")
         columns = self.columns
         examples = self.make_examples(columns)
+        examples = self.annotate(examples)
 
         prompt = self.make_prompt(examples)
         prompt = task_instruction_editor(prompt)
