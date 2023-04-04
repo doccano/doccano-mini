@@ -4,10 +4,10 @@ from typing import List
 import streamlit as st
 
 from doccano_mini.models.entity import Entity
-from doccano_mini.repositories.session_storage import SessionStorage
+from doccano_mini.storages.session_storage import SessionStorage
 
 
-class EntitySessionRepository:
+class EntitySessionStorage:
     def __init__(self) -> None:
         self.storage = SessionStorage(state=st.session_state)
         self.storage.init_state("entities", defaultdict(list))

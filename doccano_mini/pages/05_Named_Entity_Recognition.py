@@ -6,22 +6,8 @@ from st_ner_annotate import st_ner_annotate
 
 from doccano_mini.layout import BasePage
 from doccano_mini.prompts import make_named_entity_recognition_prompt
-from doccano_mini.repositories.entity import EntitySessionRepository
-
-if "step" not in st.session_state:
-    st.session_state.step = 0
-
-
-def increment(total):
-    st.session_state.step += 1
-    if st.session_state.step >= total:
-        st.session_state.step = 0
-
-
-def decrement(total: int):
-    st.session_state.step -= 1
-    if st.session_state.step < 0:
-        st.session_state.step = total - 1
+from doccano_mini.storages.entity import EntitySessionStorage
+from doccano_mini.storages.stepper import StepperSessionStorage
 
 
 class NamedEntityRecognitionPage(BasePage):
@@ -30,7 +16,8 @@ class NamedEntityRecognitionPage(BasePage):
     def __init__(self, title: str) -> None:
         super().__init__(title)
         self.types: List[str] = []
-        self.entity_repository = EntitySessionRepository()
+        self.entity_repository = EntitySessionStorage()
+        self.stepper_repository = StepperSessionStorage()
 
     def define_entity_types(self):
         st.subheader("Define entity types")
@@ -48,10 +35,12 @@ class NamedEntityRecognitionPage(BasePage):
         selected_type = st.selectbox("Select an entity type", types)
 
         col1, col2, _ = st.columns([1, 1, 8])
-        col1.button("Prev", on_click=decrement, args=(len(examples),))
-        col2.button("Next", on_click=increment, args=(len(examples),))
+        col1.button("Prev", on_click=self.stepper_repository.decrement, args=(len(examples),))
+        col2.button("Next", on_click=self.stepper_repository.increment, args=(len(examples),))
 
-        text = examples[st.session_state.step]["text"]
+        self.stepper_repository.fit(len(examples))
+        step = self.stepper_repository.get_step()
+        text = examples[step]["text"]
         entities = self.entity_repository.find_by_text(text)
         entities = st_ner_annotate(selected_type, text, entities, key=text)
         self.entity_repository.store_by_text(text, entities)
