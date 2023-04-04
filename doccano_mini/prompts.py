@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from langchain.prompts.few_shot import FewShotPromptTemplate
@@ -94,5 +95,38 @@ def make_task_free_prompt(examples: List[dict]) -> FewShotPromptTemplate:
         prefix=task_instruction,
         suffix="\n".join([f"{column}: {{{column}}}" for column in columns[:-1]]),
         input_variables=columns[:-1],
+    )
+    return prompt
+
+
+def make_named_entity_recognition_prompt(examples: List[dict], **kwargs) -> FewShotPromptTemplate:
+    task_instruction = (
+        "You are a highly intelligent and accurate Named-entity recognition(NER) system. "
+        "You take Passage as input and your task is to recognize and extract specific types of "
+        "named entities in that given passage and classify into a set of entity types.\n"
+    )
+    types = kwargs.get("types", [])
+    task_instruction += "The following entity types are allowed:\n"
+    for type in types:
+        task_instruction += f"- {type}\n"
+
+    for example in examples:
+        entities = [
+            {"mention": example["text"][entity["start"] : entity["end"]], "type": entity["label"]}
+            for entity in example["entities"]
+        ]
+        example["entities"] = json.dumps(entities)
+
+    example_prompt = PromptTemplate(
+        input_variables=["text", "entities"],
+        template="text: {text}\nentities: {entities}",
+    )
+    prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        prefix=task_instruction,
+        suffix="text: {{text}}",
+        input_variables=["text"],
+        template_format="jinja2",
     )
     return prompt
