@@ -1,4 +1,3 @@
-import random
 from collections import defaultdict
 
 import pandas as pd
@@ -26,9 +25,6 @@ def prepare_dataset(dataset_id):
     indices_by_label = defaultdict(list)
     for i, x in enumerate(dataset["train"]):
         indices_by_label[x["label"]].append(i)
-
-    for indices in indices_by_label.values():
-        random.shuffle(indices)
 
     return dataset, list(interleave_longest(*indices_by_label.values()))
 
