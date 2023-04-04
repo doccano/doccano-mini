@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 from typing import Dict, List
 
@@ -54,6 +53,9 @@ class NamedEntityRecognitionPage(BasePage):
         return types
 
     def annotate(self, examples: List[Dict]) -> List[Dict]:
+        if len(examples) == 0:
+            return []
+
         types = self.define_entity_types()
         selected_type = st.selectbox("Select an entity type", types)
 
@@ -61,22 +63,14 @@ class NamedEntityRecognitionPage(BasePage):
         col1.button("Prev", on_click=decrement, args=(len(examples),))
         col2.button("Next", on_click=increment, args=(len(examples),))
 
-        text = examples[st.session_state.step]["text"] if len(examples) > st.session_state.step else ""
+        text = examples[st.session_state.step]["text"]
         entities = load_entities(text)
         entities = st_ner_annotate(selected_type, text, entities, key=text)
         save_entities(text, entities)
-
-        # Format entities
-        for example in examples:
-            entities = load_entities(example["text"])
-            entities = [
-                {"mention": example["text"][entity["start"] : entity["end"]], "type": entity["label"]}
-                for entity in entities
-            ]
-            example["entities"] = json.dumps(entities)
         return examples
 
     def make_prompt(self, examples: List[Dict]):
+        examples = [{**example, "entities": load_entities(example["text"])} for example in examples]
         return make_named_entity_recognition_prompt(examples, types=self.types)
 
     def prepare_inputs(self, columns: List[str]):

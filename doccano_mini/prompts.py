@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from langchain.prompts.few_shot import FewShotPromptTemplate
@@ -91,6 +92,13 @@ def make_named_entity_recognition_prompt(examples: List[dict], **kwargs) -> FewS
     task_instruction += "The following entity types are allowed:\n"
     for type in types:
         task_instruction += f"- {type}\n"
+
+    for example in examples:
+        entities = [
+            {"mention": example["text"][entity["start"] : entity["end"]], "type": entity["label"]}
+            for entity in example["entities"]
+        ]
+        example["entities"] = json.dumps(entities)
 
     example_prompt = PromptTemplate(
         input_variables=["text", "entities"],
