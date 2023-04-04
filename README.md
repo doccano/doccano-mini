@@ -8,6 +8,7 @@ At this time, the following tasks are supported:
 - Question answering
 - Summarization
 - Paraphrasing
+- Named Entity Recognition
 - Task Free
 
 Note: This is an experimental project.
